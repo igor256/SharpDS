@@ -14,6 +14,7 @@ namespace HeroesOfNevim.src.ds
     {
         public BinaryHeap()
         {
+
         }
 
         
