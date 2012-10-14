@@ -10,7 +10,7 @@ namespace SharpDS
     /// use with binary heaps
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    protected class BinaryTreeNode<T>:Node<T>
+    class BinaryTreeNode<T>:Node<T>
     {
         private BinaryTreeNode<T>  _parent; // reference to the parent node
         private BinaryTreeNode<T> _left;    // ref. to leftchild
@@ -81,6 +81,15 @@ namespace SharpDS
         public void setPrice(uint value) 
         {
             price = value;
+        }
+
+        /// <summary>
+        /// Returns the price for the node
+        /// </summary>
+        /// <returns></returns>
+        public uint getPrice() 
+        {
+            return price;
         }
     }
 }

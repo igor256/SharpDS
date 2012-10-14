@@ -9,7 +9,7 @@ namespace SharpDS
     /// Provides a simple root level container for
     /// data stored in SharpDS
     /// </summary>
-    protected class Node<T>
+    class Node<T>
     {
         private T value; // value contained in the node
         
