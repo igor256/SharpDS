@@ -20,11 +20,6 @@ namespace SharpDS
         }
 
         /// <summary>
-        /// Provides a method of adding an entry to the data structure. 
-        /// </summary>
-        public abstract void Add(T item);
-
-        /// <summary>
         /// Provides an access to the total number of elements stored in the ds
         /// </summary>
         private uint _size = 0;

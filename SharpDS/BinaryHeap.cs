@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SharpDS;
-using System.Collections.Generic;
 namespace SharpDS
 {
     /// <summary>
@@ -11,14 +10,14 @@ namespace SharpDS
     /// Classic version using list for
     /// storing all the data.
     /// 
-    /// Nothing more and nothing less. 
+    /// Nothing more and nothing less.
+    /// Made with love in London!
     /// </summary>
     /// <typeparam name="T"></typeparam>
     class BinaryHeap<T>:SharpDS<T>
     {
         private List<BinaryTreeNode<T>> data; // data stored in the heap, heap formated
-        private BinaryTreeNode<T> root; // stores the root element of binary heap
-
+       
         public BinaryHeap():base()
         {
             data = new List<BinaryTreeNode<T>>();
@@ -68,9 +67,6 @@ namespace SharpDS
             return data.Count > 0 ? data[0].getValue() : default(T);
         }
 
-        public override void Add(T item)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
