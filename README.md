@@ -4,6 +4,10 @@ A set of collections for C# made for purpose of Windows Phone Development.
 This library is highly experimental and not usable at the moment. It will 
 soon be, however :). 
 
+Docs:
+------
+Have a look at wiki for thorough documentation.
+
 Updates:
 -------
 ### 27/10/2012
