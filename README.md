@@ -6,7 +6,8 @@ soon be, however :).
 
 Updates:
 -------
-27/10/2012
+### 27/10/2012
+
 BinaryHeap is now prepared for use! Math package was added, containing stubs 
 of Complex and Matrix classes for (suprisingly) complex + matrix computation.
 Some operations are not yet supported, but most of the casual operators like
