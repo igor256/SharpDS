@@ -19,5 +19,6 @@ Feel free to drop me some lines at:
 vojta[dot]havlicek[at]gmail[dot]com
 
 ------------------------
-Made with hate in London!
+Made with love in London!
+
 Vojtech Havlicek 2012
