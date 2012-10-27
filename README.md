@@ -5,7 +5,7 @@ This library is highly experimental and not usable at the moment. It will
 soon be, however :). 
 
 Updates:
-========
+-------
 27/10/2012
 BinaryHeap is now prepared for use! Math package was added, containing stubs 
 of Complex and Matrix classes for (suprisingly) complex + matrix computation.
@@ -14,7 +14,7 @@ Some operations are not yet supported, but most of the casual operators like
 computation supported as well!
 
 Contact:
-=======
+--------
 Feel free to drop me some lines at:
 vojta[dot]havlicek[at]gmail[dot]com
 
