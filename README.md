@@ -6,7 +6,7 @@ soon be, however :).
 
 Docs:
 ------
-Have a look at [wiki](VojtaHavlicek/SharpDS/wiki) for thorough documentation.
+Have a look at [wiki](SharpDS/wiki) for thorough documentation.
 
 Updates:
 -------
