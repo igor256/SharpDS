@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SharpDS;
-namespace SharpDS
+using SharpDS.ds.abs;
+
+/// <summary>
+/// Binary Heap implementation in C#.
+/// Classic version using list for
+/// storing all the data.
+/// 
+/// Nothing more and nothing less.
+/// Made with love in London!
+/// </summary>
+/// <typeparam name="T"></typeparam>
+namespace SharpDS.ds.binaryheap
 {
     /// <summary>
-    /// Binary Heap implementation in C#.
-    /// Classic version using list for
-    /// storing all the data.
-    /// 
-    /// Nothing more and nothing less.
-    /// Made with love in London!
+    /// Binary Heap implementation. Nothing more and nothing less.  Made with love in London!
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Type of the object contained in the heap</typeparam>
     class BinaryHeap<T>:SharpDS<T>
     {
         private List<BinaryTreeNode<T>> data; // data stored in the heap, heap formated
@@ -32,6 +38,16 @@ namespace SharpDS
         {
             BinaryTreeNode<T> node = new BinaryTreeNode<T>(ref item, price);
             push(node);
+        }
+
+        /// <summary>
+        /// Overload considering int as an input
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="price"></param>
+        public void Add(T item, int price)
+        {
+            Add(item, (uint) price);
         }
 
         /// <summary>

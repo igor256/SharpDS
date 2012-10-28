@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using SharpDS;
 
-namespace SharpDS
+namespace SharpDS.ds.abs
 {
     
      abstract class SharpDS<T>

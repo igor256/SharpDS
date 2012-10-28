@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SharpDS.ds.abs;
 
-namespace SharpDS
+namespace SharpDS.ds.binaryheap
 {
     /// <summary>
     /// Provides a simple node for 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SharpDS
+namespace SharpDS.ds.abs
 {
     /// <summary>
     /// Provides a simple root level container for
