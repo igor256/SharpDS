@@ -25,5 +25,7 @@ vojta[dot]havlicek[at]gmail[dot]com
 
 ------------------------
 Made with love in London!
+
 [flashlemonade.com](http://www.flashlemonade.com)
+
 Vojtech Havlicek 2012
