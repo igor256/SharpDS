@@ -34,20 +34,11 @@ namespace SharpDS.ds.binaryheap
         /// Adds an item to the heap. Overrides really?
         /// </summary>
         /// <param name="item"></param>
-        public void Add(T item, uint price)
+        public override void Add(T item, uint price)
         {
             BinaryTreeNode<T> node = new BinaryTreeNode<T>(ref item, price);
+            _size++;
             push(node);
-        }
-
-        /// <summary>
-        /// Overload considering int as an input
-        /// </summary>
-        /// <param name="item"></param>
-        /// <param name="price"></param>
-        public void Add(T item, int price)
-        {
-            Add(item, (uint) price);
         }
 
         /// <summary>
@@ -153,6 +144,7 @@ namespace SharpDS.ds.binaryheap
                         break; // heapified
                 }
             }
+            _size--;
             return toReturn;
         }
 
