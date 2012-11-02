@@ -23,7 +23,10 @@ Contact:
 Feel free to drop me some lines at:
 vojta[dot]havlicek[at]gmail[dot]com
 
+Be sure to visit:
+[flashlemonade.com](http://www.flashlemonade.com)
+
 ------------------------
 Made with love in London!
-[flashlemonade.com](http://www.flashlemonade.com)
+
 Vojtech Havlicek 2012
