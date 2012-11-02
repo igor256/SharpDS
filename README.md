@@ -10,6 +10,11 @@ Have a look at [wiki](SharpDS/wiki) for thorough documentation.
 
 Updates:
 -------
+### 02/11/2012
+
+BinomialHeap is being implemented! Work in progress version with implemented
+Add is prepared. Merging soon!
+
 ### 27/10/2012
 
 BinaryHeap is now prepared for use! Math package was added, containing stubs 
