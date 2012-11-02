@@ -1,8 +1,7 @@
 SharpDS
 =======
-A set of collections for C# made for purpose of Windows Phone Development.
-This library is highly experimental and not usable at the moment. It will 
-soon be, however :). 
+A set of lightweight data structures missing in C#. This library is highly 
+experimental and not usable at the moment.
 
 Docs:
 ------
