@@ -69,7 +69,14 @@ namespace SharpDS.ds.binomialtree
         {
             children.Add(root);
         }
-        
 
+        /// <summary>
+        /// Returns the children of node
+        /// </summary>
+        /// <returns></returns>
+        public List<BinomialTreeNode<T>> getChildren() 
+        {
+            return children;
+        }
     }
 }
