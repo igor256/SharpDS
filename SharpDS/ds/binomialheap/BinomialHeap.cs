@@ -88,10 +88,12 @@ namespace SharpDS.ds.binomialheap
             }
 
             List<BinomialTreeNode<T>> newList = new List<BinomialTreeNode<T>>(traversalLength + firstend); // a list of new rootNodes
-
+            
             // Traversal
             for (int i = 0; i < traversalLength; i++)
             {
+                newList.Add(null); // newList is not prefilled, add null before performing any operation. <<< remove this later, if you find better solution
+
                 BinomialTreeNode<T> subTreeNodeShort = null;
                 if (i < firstend)
                 {
@@ -108,6 +110,7 @@ namespace SharpDS.ds.binomialheap
                 else if (subTreeNodeShort != null && subTreeNodeLong != null)
                 {
                     // merge two subtrees
+                    newList.Add(null); // add a new null... sadly :D <<< remove this later, if you find better solution
                     newList[i + 1] = mergeSubtrees(ref subTreeNodeLong, ref subTreeNodeShort);
                 }
                 else
@@ -230,6 +233,15 @@ namespace SharpDS.ds.binomialheap
             BinomialTreeNode<T> toReturn = rootNodes[0];
             foreach (BinomialTreeNode<T> btn in rootNodes)
             {
+                if (btn == null)
+                    continue;
+
+                if (toReturn == null)
+                {
+                    toReturn = btn;
+                    continue;
+                }
+
                 if (toReturn.getPrice() > btn.getPrice())
                 {
                     toReturn = btn;

@@ -17,6 +17,11 @@ Be sure to visit:
 
 Updates:
 -------
+### 06/11/2012
+
+Minor mistakes in binomial heap implementation corrected. Binomial heap 
+implementation is working now!
+
 ### 05/11/2012
 
 Binomial heap implemented. To be tested properly.
