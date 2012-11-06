@@ -17,22 +17,18 @@ Be sure to visit:
 
 Updates:
 -------
-### 06/11/2012
-
+* 06/11/2012 - 
 Minor mistakes in binomial heap implementation corrected. Binomial heap 
 implementation is working now!
 
-### 05/11/2012
-
+* 05/11/2012 - 
 Binomial heap implemented. To be tested properly.
 
-### 02/11/2012
-
+* 02/11/2012 - 
 BinomialHeap is being implemented! Work in progress version with implemented
 Add is prepared. Merging soon!
 
-### 27/10/2012
-
+* 27/10/2012 -
 BinaryHeap is now prepared for use! Math package was added, containing stubs 
 of Complex and Matrix classes for (suprisingly) complex + matrix computation.
 Some operations are not yet supported, but most of the casual operators like
