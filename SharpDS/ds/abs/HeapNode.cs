@@ -98,6 +98,20 @@ namespace SharpDS.ds.abs
         {
             return price;
         }
+		
+		public static bool operator <(HeapNode<T> left, HeapNode<T> right)
+		{
+			if(left.getPrice() < right.getPrice())
+				return true;
+			return false;
+		}
+		
+		public static bool operator >(HeapNode<T> left, HeapNode<T> right)
+		{
+			if(left.getPrice() > right.getPrice())
+				return true;
+			return false;
+		}
 
     }
 }

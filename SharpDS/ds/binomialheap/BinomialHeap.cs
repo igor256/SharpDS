@@ -80,25 +80,26 @@ namespace SharpDS.ds.binomialheap
             if (newRootNodes.Count > rootNodes.Count) // Could be done wiser probably
             {
                 traversalLength = newRootNodes.Count;
-                firstend = rootNodes.Count;
-                longer = newRootNodes;
-                shorter = rootNodes;
+                firstend        = rootNodes.Count;
+                longer          = newRootNodes;
+                shorter         = rootNodes;
             }
             else
             {
                 traversalLength = rootNodes.Count;
-                firstend = newRootNodes.Count;
-                longer = rootNodes;
-                shorter = newRootNodes;
+                firstend        = newRootNodes.Count;
+                longer          = rootNodes;
+                shorter         = newRootNodes;
             }
 
-            List<BinomialTreeNode<T>> newList = new List<BinomialTreeNode<T>>(traversalLength + firstend); // a list of new rootNodes
+            List<BinomialTreeNode<T>> newList = new List<BinomialTreeNode<T>>(traversalLength + firstend); // a list of new rootNodes - is the trL + fe the right length
             
-            // Traversal
+			for(int i = 0; i < traversalLength + firstend; i++) // this should be avoided... 
+				newList.Add(null);
+			
+            // Traversal - here must be the mistake!
             for (int i = 0; i < traversalLength; i++)
-            {
-                newList.Add(null); // newList is not prefilled, add null before performing any operation. <<< remove this later, if you find better solution
-
+            {			
                 BinomialTreeNode<T> subTreeNodeShort = null;
                 if (i < firstend)
                 {
@@ -106,20 +107,18 @@ namespace SharpDS.ds.binomialheap
                 }
 
                 BinomialTreeNode<T> subTreeNodeLong = longer[i];
-
-                // new list construction
-                if (subTreeNodeShort == null && subTreeNodeLong != null)
-                    newList[i] = subTreeNodeLong;
-                else if (subTreeNodeShort != null && subTreeNodeLong == null)
-                    newList[i] = subTreeNodeShort;
-                else if (subTreeNodeShort != null && subTreeNodeLong != null)
-                {
-                    // merge two subtrees
-                    newList.Add(null); // add a new null... sadly :D <<< remove this later, if you find better solution
-                    newList[i + 1] = mergeSubtrees(subTreeNodeLong, subTreeNodeShort);
-                }
-                else
-                    newList[i] = null;
+				
+				if(subTreeNodeLong == null && subTreeNodeShort != null)
+					newList[i] = mergeSubtrees(newList[i],subTreeNodeShort);
+				else if (subTreeNodeLong != null && subTreeNodeShort == null)
+					newList[i] = mergeSubtrees(newList[i],subTreeNodeLong);
+				else if(subTreeNodeLong == null && subTreeNodeShort == null)
+					newList[i] = mergeSubtrees(newList[i],null);
+				else if(subTreeNodeShort != null && subTreeNodeLong != null)
+				{
+				    newList[i+1] = mergeSubtrees(subTreeNodeLong, subTreeNodeShort);
+				}
+					                
             } // end of traversal
 
             // construct a merged bh
@@ -138,16 +137,18 @@ namespace SharpDS.ds.binomialheap
         private BinomialTreeNode<T> mergeSubtrees(BinomialTreeNode<T> rootNode1,BinomialTreeNode<T> rootNode2) 
         {
             BinomialTreeNode<T> parent;
-            if (rootNode1.getPrice() > rootNode2.getPrice())
-            {
-                rootNode1.setParent(ref rootNode2);
-                rootNode2.addChildTree(rootNode1);
+			if(rootNode1 == null)
+				parent = rootNode2;
+			else if (rootNode2 == null)
+				parent = rootNode1;
+            else if (rootNode1.getPrice() > rootNode2.getPrice())
+            { 
+				rootNode2.addChildTree(rootNode1);
                 parent = rootNode2;
             }
             else
             {
                 rootNode1.addChildTree(rootNode2);
-                rootNode2.setParent(ref rootNode1);
                 parent = rootNode1;
             }
 
@@ -167,25 +168,23 @@ namespace SharpDS.ds.binomialheap
         /// <param name="item"></param>
         public override void Add(T item, int price)
         {
-            System.Diagnostics.Debug.WriteLine("Started adding");
-
+           
             BinomialTreeNode<T> newNode = new BinomialTreeNode<T>(ref item, price);
             BinomialTreeNode<T> comparedNode;     // pointer to a compared node.
             int rootNodeIndex = 0;        // points to the index in the rootNodes 
 
-            System.Diagnostics.Debug.WriteLine("Starting loop");
             while (rootNodes[rootNodeIndex] != null) 
             {
                 comparedNode = rootNodes[rootNodeIndex];
                 if (comparedNode.getPrice() > newNode.getPrice())
                 {
-                    comparedNode.setParent(ref newNode);
+                  //  comparedNode.setParent(ref newNode);
                     newNode.addChildTree(comparedNode);
                 }
                 else
                 {
                     comparedNode.addChildTree(newNode);
-                    newNode.setParent(ref comparedNode);
+                   // newNode.setParent(ref comparedNode);
                     newNode = comparedNode;
                 }
                 rootNodes[rootNodeIndex] = null;
@@ -194,8 +193,7 @@ namespace SharpDS.ds.binomialheap
                 // if root index is out of range, add a new node
                 if (rootNodeIndex > rootNodes.Count - 1)
                 {
-                    System.Diagnostics.Debug.WriteLine("Adding a new null position");
-                    rootNodes.Add(null);
+					rootNodes.Add(null);
                 }
             }
 
@@ -232,7 +230,6 @@ namespace SharpDS.ds.binomialheap
         private BinomialTreeNode<T> minimumNode() 
         {
             /// Check if something is contained in the heap
-            Console.WriteLine("rn. count: " + rootNodes.Count);
             if (rootNodes.Count == 0)
                 return null;
 
@@ -273,11 +270,11 @@ namespace SharpDS.ds.binomialheap
             BinomialTreeNode<T> minRootNode    = minimumNode();
 			
 			if(minRootNode == null){
-				Console.WriteLine("null reached");
 				return;
 			}
 			
             List<BinomialTreeNode<T>> children = minRootNode.getChildren();
+	
 
             int i        = rootNodes.IndexOf(minRootNode); // Removes the min root node
             rootNodes[i] = null; // nulls the index

@@ -17,6 +17,10 @@ Be sure to visit:
 
 Updates:
 -------
+* 12/11/2012 -
+The issues in binomial heap investigated. Faulty RemoveMinimum implementation found, repaired.
+Some unnecessary steps at RemoveMinimum are causing the algorithm to be a bit slower at the moment.
+
 * 11/11/2012 -
 Implementing Fibonacci heap in progress. Some issues with default values on Peek() in Binomial 
 heap were found when using data types.

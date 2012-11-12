@@ -37,7 +37,7 @@ namespace SharpDS.ds.binomialtree
         /// Sets a reference to a parent.
         /// </summary>
         /// <param name="value"></param>
-        public void setParent(ref BinomialTreeNode<T> value)
+        private void setParent(BinomialTreeNode<T> value)
         {
             this._parent = value;
         }
@@ -65,9 +65,10 @@ namespace SharpDS.ds.binomialtree
         /// Adds a child tree to the node
         /// </summary>
         /// <param name="root"></param>
-        public void addChildTree(BinomialTreeNode<T> root) 
+        public void addChildTree(BinomialTreeNode<T> node) 
         {
-            children.Add(root);
+			node.setParent(this);
+            children.Add(node);
         }
 
         /// <summary>
@@ -78,5 +79,6 @@ namespace SharpDS.ds.binomialtree
         {
             return children;
         }
+		
     }
 }
