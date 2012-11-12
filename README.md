@@ -17,6 +17,10 @@ Be sure to visit:
 
 Updates:
 -------
+* 11/11/2012 -
+Implementing Fibonacci heap in progress. Some issues with default values on Peek() in Binomial 
+heap were found when using data types.
+
 * 06/11/2012 - 
 Minor mistakes in binomial heap implementation corrected. Binomial heap 
 implementation is working now!

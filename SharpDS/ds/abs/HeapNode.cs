@@ -17,14 +17,14 @@ namespace SharpDS.ds.abs
         protected HeapNode<T> _left;   // ref. to leftchild
         protected HeapNode<T> _right;  // ref. to rightchild
 
-        protected uint price;          // price of the node
+        protected int price;          // price of the node
 
         /// <summary>
         /// Default constructor
         /// </summary>
         /// <param name="value">value contained in the node</param>
         /// <param name="price">price of the node</param>
-        public HeapNode(ref T value, uint price)
+        public HeapNode(ref T value, int price)
         {
             setValue(ref value);
             setPrice(price);
@@ -85,7 +85,7 @@ namespace SharpDS.ds.abs
         /// Sets the price of the node to value
         /// </summary>
         /// <param name="value"></param>
-        public void setPrice(uint value)
+        public void setPrice(int value)
         {
             price = value;
         }
@@ -94,7 +94,7 @@ namespace SharpDS.ds.abs
         /// Returns the price for the node
         /// </summary>
         /// <returns></returns>
-        public uint getPrice()
+        public int getPrice()
         {
             return price;
         }

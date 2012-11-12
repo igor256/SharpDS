@@ -9,6 +9,11 @@ using SharpDS.ds.binomialtree;
 
 namespace SharpDS.ds.binomialheap
 {
+	/**
+	 * TODO: 
+	 * ensure the rootnodes are removed correctly
+	 * 
+	 */ 
     /// <summary>
     /// SharpDS implementation of binomial heap.
     /// 
@@ -17,7 +22,7 @@ namespace SharpDS.ds.binomialheap
     /// <typeparam name="T"></typeparam>
     class BinomialHeap<T>:SharpDS<T>
     {
-        protected List<BinomialTreeNode<T>> rootNodes; // contains an array of root nodes of trees in the heap. BinaryHeap used for prioritising
+        public List<BinomialTreeNode<T>> rootNodes; // contains an array of root nodes of trees in the heap. BinaryHeap used for prioritising
 
         /// <summary>
         /// Default constructor for the binomial heap
@@ -29,14 +34,15 @@ namespace SharpDS.ds.binomialheap
         }
 
         /// <summary>
-        /// Creates a new zero binomial heap
+        /// Creates a new binomial heap with a first rootnode inserted
         /// </summary>
         /// <param name="rootnode"></param>
         /// <param name="price"></param>
-        public BinomialHeap(ref T rootnode, uint price):this()
+        public BinomialHeap(ref T rootnode, int price):this()
         {
             BinomialTreeNode<T> newNode = new BinomialTreeNode<T>(ref rootnode, price);
-        }
+        	rootNodes[0] = newNode;
+		}
 
         /// <summary>
         /// Protected constructor for creating a BH from a list of rootnodes.
@@ -51,10 +57,10 @@ namespace SharpDS.ds.binomialheap
         /// <summary>
         /// Merges two binomial heaps
         /// </summary>
-        public BinomialHeap<T> merge(BinomialHeap<T> heap) 
+        public BinomialHeap<T> Merge(BinomialHeap<T> heap) 
         {
             // returns a merged binomial heap
-            return merge(heap.getRootNodes());
+            return Merge(heap.getRootNodes());
         }
 
         /// <summary>
@@ -62,29 +68,28 @@ namespace SharpDS.ds.binomialheap
         /// </summary>
         /// <param name="newRootNodes"></param>
         /// <returns></returns>
-        public BinomialHeap<T> merge(List<BinomialTreeNode<T>> newRootNodes)
+        public BinomialHeap<T> Merge(List<BinomialTreeNode<T>> newRootNodes)
         {
             BinomialHeap<T> newHeap;
 
-            List<BinomialTreeNode<T>> comparedBTNList = newRootNodes;
             int traversalLength; // how many consequent indices shall i check?
             int firstend;        // how many consequent indices before nullity of one list occurs?
             List<BinomialTreeNode<T>> shorter; // contains the shorter rootnode list
             List<BinomialTreeNode<T>> longer;  // contains the longer rootnode list
 
-            if (comparedBTNList.Count > rootNodes.Count) // Could be done wiser probably
+            if (newRootNodes.Count > rootNodes.Count) // Could be done wiser probably
             {
-                traversalLength = comparedBTNList.Count;
+                traversalLength = newRootNodes.Count;
                 firstend = rootNodes.Count;
-                longer = comparedBTNList;
+                longer = newRootNodes;
                 shorter = rootNodes;
             }
             else
             {
                 traversalLength = rootNodes.Count;
-                firstend = comparedBTNList.Count;
+                firstend = newRootNodes.Count;
                 longer = rootNodes;
-                shorter = comparedBTNList;
+                shorter = newRootNodes;
             }
 
             List<BinomialTreeNode<T>> newList = new List<BinomialTreeNode<T>>(traversalLength + firstend); // a list of new rootNodes
@@ -111,7 +116,7 @@ namespace SharpDS.ds.binomialheap
                 {
                     // merge two subtrees
                     newList.Add(null); // add a new null... sadly :D <<< remove this later, if you find better solution
-                    newList[i + 1] = mergeSubtrees(ref subTreeNodeLong, ref subTreeNodeShort);
+                    newList[i + 1] = mergeSubtrees(subTreeNodeLong, subTreeNodeShort);
                 }
                 else
                     newList[i] = null;
@@ -130,7 +135,7 @@ namespace SharpDS.ds.binomialheap
         /// </summary>
         /// <param name="rootNode1"></param>
         /// <param name="rootNode2"></param>
-        private BinomialTreeNode<T> mergeSubtrees(ref BinomialTreeNode<T> rootNode1, ref BinomialTreeNode<T> rootNode2) 
+        private BinomialTreeNode<T> mergeSubtrees(BinomialTreeNode<T> rootNode1,BinomialTreeNode<T> rootNode2) 
         {
             BinomialTreeNode<T> parent;
             if (rootNode1.getPrice() > rootNode2.getPrice())
@@ -160,7 +165,7 @@ namespace SharpDS.ds.binomialheap
         /// for a better one
         /// </summary>
         /// <param name="item"></param>
-        public override void Add(T item, uint price)
+        public override void Add(T item, int price)
         {
             System.Diagnostics.Debug.WriteLine("Started adding");
 
@@ -209,13 +214,13 @@ namespace SharpDS.ds.binomialheap
         /// implemented though.
         /// </summary>
         /// <returns>The leftmost minimum</returns>
-        public T minimum() 
+        public override T Peek() 
         {
             BinomialTreeNode<T> btn = minimumNode();
             if (btn != null)
                 return btn.getValue();
             else
-                return default(T);
+                return default(T); //here we go!
 
         }
 
@@ -227,6 +232,7 @@ namespace SharpDS.ds.binomialheap
         private BinomialTreeNode<T> minimumNode() 
         {
             /// Check if something is contained in the heap
+            Console.WriteLine("rn. count: " + rootNodes.Count);
             if (rootNodes.Count == 0)
                 return null;
 
@@ -262,17 +268,23 @@ namespace SharpDS.ds.binomialheap
         /// Not yet ready.
         /// 
         /// </summary>
-        public void removeMinimum() 
+        public override void RemoveMinimum() 
         {
             BinomialTreeNode<T> minRootNode    = minimumNode();
+			
+			if(minRootNode == null){
+				Console.WriteLine("null reached");
+				return;
+			}
+			
             List<BinomialTreeNode<T>> children = minRootNode.getChildren();
 
-            int i = rootNodes.IndexOf(minRootNode); // Removes the min root node
+            int i        = rootNodes.IndexOf(minRootNode); // Removes the min root node
             rootNodes[i] = null; // nulls the index
 
             // set the parents to null and add the node into the heap. 
             // check if this is correctly implemented
-            BinomialHeap<T> clone = merge(children);
+            BinomialHeap<T> clone = Merge(children);
             this.rootNodes = clone.rootNodes;
         }
 

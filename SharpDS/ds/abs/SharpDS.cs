@@ -7,7 +7,7 @@ using SharpDS;
 namespace SharpDS.ds.abs
 {
     
-     abstract class SharpDS<T>
+    public abstract class SharpDS<T>
     {
        
 
@@ -34,10 +34,20 @@ namespace SharpDS.ds.abs
             get { return __size; }
         }
 
-        public abstract void Add(T item, uint price);
+        public abstract void Add(T item, int price);
        /* public void Add(T item, int price)
         {
             Add(item, (int) price);
         }*/
+		
+		/// <summary>
+		/// Returns the value of the first element in the SharpDS (ie. minimum of heap)
+		/// </summary>
+		public abstract T Peek();
+		
+		/// <summary>
+		/// Removes the minimum node.
+		/// </summary>
+		public abstract void RemoveMinimum();
     }
 }

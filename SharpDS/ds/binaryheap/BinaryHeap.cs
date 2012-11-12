@@ -34,13 +34,13 @@ namespace SharpDS.ds.binaryheap
         /// Adds an item to the heap. Overrides really?
         /// </summary>
         /// <param name="item"></param>
-        public override void Add(T item, uint price)
+        public override void Add(T item, int price)
         {
             BinaryTreeNode<T> node = new BinaryTreeNode<T>(ref item, price);
             _size++;
             push(node);
         }
-
+		
         /// <summary>
         /// Inserts an element into the rooted binary heap.
         /// </summary>
@@ -70,7 +70,7 @@ namespace SharpDS.ds.binaryheap
         /// from the data structure
         /// </summary>
         /// <returns>Root element, or default value of heap type</returns>
-        public T Peek()
+        public override T Peek()
         {
             return data.Count > 0 ? data[0].getValue() : default(T);
         }
@@ -80,14 +80,12 @@ namespace SharpDS.ds.binaryheap
         /// Removes the root element from the data structure
         /// </summary>
         /// <returns></returns>
-        public T RemoveRoot() 
+        public override void RemoveMinimum() 
         {
             int cnt = data.Count; // no of elements stored in the heap
             if (cnt == 0)         // if no elements are present, return T
-                return default(T);
-
-            T toReturn = data[0].getValue(); // get the first element stored
-            
+                return;
+     
             int elementIndex = 0;            // stores an information of the new root's position when downheap.
             int leftChildIndex = 0;          // stores an info about leftChild
             int rightChildIndex = 0;         // stores an info about rightChild
@@ -145,7 +143,6 @@ namespace SharpDS.ds.binaryheap
                 }
             }
             _size--;
-            return toReturn;
         }
 
         /// <summary>

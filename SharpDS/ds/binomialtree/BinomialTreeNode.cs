@@ -14,11 +14,11 @@ namespace SharpDS.ds.binomialtree
     /// <typeparam name="T"></typeparam>
     class BinomialTreeNode<T>:Node<T>
     {
-        private uint _price = 0;
+        private int _price = 0;
         private BinomialTreeNode<T> _parent;
         private List <BinomialTreeNode<T>> children;
         
-        public BinomialTreeNode(ref T value, uint price)
+        public BinomialTreeNode(ref T value, int price)
         {
             children = new List<BinomialTreeNode<T>>();
             setValue(ref value);
@@ -46,7 +46,7 @@ namespace SharpDS.ds.binomialtree
         /// Sets the price of the node to value
         /// </summary>
         /// <param name="value"></param>
-        public void setPrice(uint value)
+        public void setPrice(int value)
         {
            _price = value;
         }
@@ -55,7 +55,7 @@ namespace SharpDS.ds.binomialtree
         /// Returns the price for the node
         /// </summary>
         /// <returns></returns>
-        public uint getPrice()
+        public int getPrice()
         {
             return _price;
         }

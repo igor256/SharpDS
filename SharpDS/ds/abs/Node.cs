@@ -9,7 +9,7 @@ namespace SharpDS.ds.abs
     /// Provides a simple root level container for
     /// data stored in SharpDS
     /// </summary>
-    class Node<T>
+    public class Node<T>
     {
         private T value; // value contained in the node
         

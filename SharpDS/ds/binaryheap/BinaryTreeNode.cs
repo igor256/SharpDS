@@ -13,7 +13,7 @@ namespace SharpDS.ds.binaryheap
     /// <typeparam name="T"></typeparam>
     class BinaryTreeNode<T>:HeapNode<T>
     {
-        public BinaryTreeNode(ref T value, uint price) : base(ref value, price) { }
+        public BinaryTreeNode(ref T value, int price) : base(ref value, price) { }
             
     }
 }
