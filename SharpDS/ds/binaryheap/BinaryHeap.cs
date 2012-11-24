@@ -20,7 +20,7 @@ namespace SharpDS.ds.binaryheap
     /// Binary Heap implementation. Nothing more and nothing less.  Made with love in London!
     /// </summary>
     /// <typeparam name="T">Type of the object contained in the heap</typeparam>
-    class BinaryHeap<T>:SharpDS<T>
+    class BinaryHeap<T>:Heap<T>
     {
         private List<BinaryTreeNode<T>> data; // data stored in the heap, heap formated
        

@@ -5,7 +5,6 @@ using System.Text;
 
 using SharpDS.ds.abs;
 using SharpDS.ds.binaryheap;
-using SharpDS.ds.binomialtree;
 
 namespace SharpDS.ds.binomialheap
 {
@@ -20,7 +19,7 @@ namespace SharpDS.ds.binomialheap
     /// For fast merge operations and fun :D 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    class BinomialHeap<T>:SharpDS<T>
+    class BinomialHeap<T>:Heap<T>
     {
         public List<BinomialTreeNode<T>> rootNodes; // contains an array of root nodes of trees in the heap. BinaryHeap used for prioritising
 
@@ -68,7 +67,7 @@ namespace SharpDS.ds.binomialheap
         /// </summary>
         /// <param name="newRootNodes"></param>
         /// <returns></returns>
-        public BinomialHeap<T> Merge(List<BinomialTreeNode<T>> newRootNodes)
+        public virtual BinomialHeap<T> Merge(List<BinomialTreeNode<T>> newRootNodes)
         {
             BinomialHeap<T> newHeap;
 
@@ -134,7 +133,7 @@ namespace SharpDS.ds.binomialheap
         /// </summary>
         /// <param name="rootNode1"></param>
         /// <param name="rootNode2"></param>
-        private BinomialTreeNode<T> mergeSubtrees(BinomialTreeNode<T> rootNode1,BinomialTreeNode<T> rootNode2) 
+        protected BinomialTreeNode<T> mergeSubtrees(BinomialTreeNode<T> rootNode1,BinomialTreeNode<T> rootNode2) 
         {
             BinomialTreeNode<T> parent;
 			if(rootNode1 == null)
@@ -227,7 +226,7 @@ namespace SharpDS.ds.binomialheap
         /// list.
         /// </summary>
         /// <returns></returns>
-        private BinomialTreeNode<T> minimumNode() 
+        protected BinomialTreeNode<T> minimumNode() 
         {
             /// Check if something is contained in the heap
             if (rootNodes.Count == 0)
