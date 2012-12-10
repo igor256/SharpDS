@@ -14,7 +14,6 @@ namespace SharpDS.ds.binomialheap
     /// <typeparam name="T"></typeparam>
     public class BinomialTreeNode<T>:Node<T>
     {
-        private int _price = 0;
         private BinomialTreeNode<T> _parent;
         private List <BinomialTreeNode<T>> children;
         
@@ -42,23 +41,7 @@ namespace SharpDS.ds.binomialheap
             this._parent = value;
         }
 
-        /// <summary>
-        /// Sets the price of the node to value
-        /// </summary>
-        /// <param name="value"></param>
-        public void setPrice(int value)
-        {
-           _price = value;
-        }
-
-        /// <summary>
-        /// Returns the price for the node
-        /// </summary>
-        /// <returns></returns>
-        public int getPrice()
-        {
-            return _price;
-        }
+      
 
 
         /// <summary>

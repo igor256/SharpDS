@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using SharpDS.ds.abs;
 using SharpDS.ds.binomialheap;
 
 /// <summary>
@@ -12,17 +14,21 @@ namespace SharpDS.ds.fibonacciheap
 	/// 
 	/// Doubly-linked circular list logic is implemented into the node.
 	/// </summary>
-	public class FibonacciTreeNode<T>:BinomialTreeNode<T>
+	public class FibonacciTreeNode<T>:Node<T>
 	{
 		private bool marked = false; // is marked?
+		private List<FibonacciTreeNode<T>> _children;
 		
 		/// For doubly linked circular list
 		protected FibonacciTreeNode<T> left;  // reference to the left sibling 
 		protected FibonacciTreeNode<T> right; // ref to the right sibling
 		
+	
 		public FibonacciTreeNode(ref T value, int price):base(ref value, price)
 		{
-			
+			left = this;
+			right = this;
+			_children = new List<FibonacciTreeNode<T>>(); // Initializes the FibonacciList
 		}
 		
 		/// <summary>
@@ -44,10 +50,27 @@ namespace SharpDS.ds.fibonacciheap
 		/// <summary>
 		/// Returns rank of the instance
 		/// </summary>
-		public int rank()
+		public int rank
 		{
-			return getChildren().Count;
+			get{return getChildren().Count; }
 		}
+		
+		/// <summary>
+		/// Gets or sets the children.
+		/// </summary>
+		public List<FibonacciTreeNode<T>> getChildren(){
+				return this._children;
+		}
+		
+		/// <summary>
+		/// Adds the child to he children list and increases rank
+		/// of the Node. (rank is 
+		/// </summary>
+		public void AddChild(FibonacciTreeNode<T> child)
+		{
+			_children.Add(child);
+		}
+		
 		
 		/// <summary>
 		/// Sets the left.

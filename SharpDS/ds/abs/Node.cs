@@ -12,10 +12,17 @@ namespace SharpDS.ds.abs
     public class Node<T>
     {
         private T value; // value contained in the node
-        
+        protected int price;          // price of the node
+		
         public Node() 
         {
         }
+		
+		public Node(ref T item, int price)
+		{
+			setValue(ref item);
+			setPrice(price);
+		}
 
         /// <summary>
         /// Returns the value stored in node
@@ -36,5 +43,24 @@ namespace SharpDS.ds.abs
             this.value = value;
         }
         
+		
+        /// <summary>
+        /// Sets the price of the node to value
+        /// </summary>
+        /// <param name="value"></param>
+        public void setPrice(int value)
+        {
+            price = value;
+        }
+
+        /// <summary>
+        /// Returns the price for the node
+        /// </summary>
+        /// <returns></returns>
+        public int getPrice()
+        {
+            return price;
+        }
+		
     }
 }

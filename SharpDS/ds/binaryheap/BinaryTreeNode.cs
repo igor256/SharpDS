@@ -17,8 +17,6 @@ namespace SharpDS.ds.binaryheap
         protected BinaryTreeNode<T> _left;   // ref. to leftchild
         protected BinaryTreeNode<T> _right;  // ref. to rightchild
 
-        protected int price;          // price of the node
-
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -79,24 +77,6 @@ namespace SharpDS.ds.binaryheap
         public void setRight(ref BinaryTreeNode<T> value)
         {
             this._right = value;
-        }
-
-        /// <summary>
-        /// Sets the price of the node to value
-        /// </summary>
-        /// <param name="value"></param>
-        public void setPrice(int value)
-        {
-            price = value;
-        }
-
-        /// <summary>
-        /// Returns the price for the node
-        /// </summary>
-        /// <returns></returns>
-        public int getPrice()
-        {
-            return price;
         }
 		
 		public static bool operator <(BinaryTreeNode<T> left, BinaryTreeNode<T> right)

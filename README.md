@@ -17,6 +17,9 @@ Be sure to visit:
 
 Updates:
 -------
+* 10/12/2012 -
+Fibonacci Heap still being implemented. RemoveMinimum mehtod is faulty.
+
 * 12/11/2012 -
 The issues in binomial heap investigated. Faulty RemoveMinimum implementation found, repaired.
 Some unnecessary steps at RemoveMinimum are causing the algorithm to be a bit slower at the moment.
