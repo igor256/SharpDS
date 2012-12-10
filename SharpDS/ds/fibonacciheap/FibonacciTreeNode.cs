@@ -106,8 +106,9 @@ namespace SharpDS.ds.fibonacciheap
 		
 		/// <summary>
 		/// Unlink this instance from the circular doubly-linked list.
+		/// Connects the list
 		/// </summary>
-		public void unlink()
+		public void Unlink()
 		{
 			
 			// identify singleton
@@ -115,7 +116,7 @@ namespace SharpDS.ds.fibonacciheap
 				return;
 			
 			// if removing last of two nodes
-			if(left.getRight() == this){
+			if(left.getLeft() == this){
 				left.setRight(null);
 				left.setLeft(null);
 				return;
@@ -125,7 +126,29 @@ namespace SharpDS.ds.fibonacciheap
 			this.left.setRight(right);
 			this.right.setLeft(left);
 		}
-		
+
+		/// <summary>
+		/// Unlinks the instance without connecting the doubly-linked list
+		/// </summary>
+		public void HardUnlink()
+		{
+			
+			// identify singleton
+			if(this.left == null)
+				return;
+			
+			// if removing last of two nodes
+			if(left.getLeft() == this){
+				left.setRight(null);
+				left.setLeft(null);
+				return;
+			}
+			
+			// otherwise just connect siblings
+			this.left.setRight(null);
+			if(this.right != null)
+				this.right.setLeft(null);
+		}
 		
 		
 	}

@@ -39,6 +39,15 @@ namespace SharpDS.ds.fibonacciheap
 		} 
 		
 		/// <summary>
+		/// Initializes a new instance of the <see cref="SharpDS.ds.fibonacciheap.FibonacciHeap`1"/> class.
+		/// </summary>
+		public FibonacciHeap (FibonacciTreeNode<T> node):base()
+		{
+			minimumNode = node;
+			_size = 1;
+		}
+		
+		/// <summary>
 		/// Returns the minimum node value from the heap. 
 		/// Note - Dangerous null!
 		/// </summary>
@@ -68,48 +77,45 @@ namespace SharpDS.ds.fibonacciheap
 			// the implementation here differs slightly from Fredman & Tarjan
 			// since the lists are not merged before performing the insertion
 			// step.
+			if(size == 0) 
+				return; // Immediate fallback if 0 sized
 			
-			if(size ==0) 
-				return; // immediate fallback if 0 sized
+			// Returns the children of the node
+			List<FibonacciTreeNode<T>> children = minimumNode.getChildren();	
 			
 			// Implement the filling of the ranks array!
-			int maxRank = (int) size + 1; //TODO: what is the max rank of any node if there are n + m nodes present? Check
-			FibonacciTreeNode<T>[] ranks = new FibonacciTreeNode<T>[maxRank];
+			int maxRank = (int) size-1+minimumNode.rank;                      // TODO: what is the max rank of any node if there are n + m nodes present? Check
+			FibonacciTreeNode<T>[] ranks = new FibonacciTreeNode<T>[maxRank]; // Array containing rootnodes indexed by rank
 			
-			// Keep the references
-		//	FibonacciTreeNode<T> nodesLeft  = minimumNode.getLeft();
-			FibonacciTreeNode<T> nodesRight = minimumNode.getRight();
-			
-			// Unlink the min node
-			minimumNode.unlink(); // the circular linked list is now splitted
-			List<FibonacciTreeNode<T>> children = minimumNode.getChildren();			
-			
-			// Sets some value to minimum node, so the comparison 
-			// with old value will be never done.
-			minimumNode = nodesRight; // minimuNode will now contain 
+			FibonacciTreeNode<T> nodesRight = minimumNode.getRight();			
+				
 			
 			// Performing the insertion step for circular list of rootnodes without minimum
-			while(nodesRight != null) // Loops through all items in the circular list except the minimum node
+			while(nodesRight != minimumNode) // Loops through all items in the circular list except the minimum node
 			{
-				
 				InsertionStep(ref ranks, nodesRight);
 				// Repoints to the right sibling
 				nodesRight = nodesRight.getRight();
+				Console.WriteLine(nodesRight == minimumNode);
 			}
+			
+			minimumNode.HardUnlink(); // the circular linked list is now splitted
+			minimumNode = null;
+			nodesRight.setLeft(null);
 			
 			// Performing the insertion step for children of the min node
-			foreach(FibonacciTreeNode<T> node in children)
+			foreach(FibonacciTreeNode<T> child in children)
 			{
-				InsertionStep(ref ranks, node);
+				InsertionStep(ref ranks, child); //how come i have null child?
 			}
-			
+		
 			// All nodes should be now 
 			// reheapified and inserted 
 			// in the ranks array
-			
-			FibonacciTreeNode<T> firstRoot = null;
-			FibonacciTreeNode<T> tempRoot  = null;
-			                    int length = ranks.GetLength(0);
+			//         ----------- WORKS
+			// Assuming this step was successful, this should work:
+			int length = ranks.GetLength(0);
+			_size = 0;
 			
 			// Scanning ranks array:
 			for(int i = 0; i < length; i++)
@@ -117,31 +123,18 @@ namespace SharpDS.ds.fibonacciheap
 				// Omits nulls and prepares reference for first.
 				if(ranks[i] == null)
 					continue;
-				else if (firstRoot == null)
-					firstRoot = ranks[i];
 				
 				// Assigns the content to root variable.	
 				FibonacciTreeNode<T> root = ranks[i]; 
+				root.HardUnlink(); // This is probably an unnecessary step
 				
-				// Update minimum Node
-				if (root.getPrice() < minimumNode.getPrice())
-					minimumNode = root; // If node with lower price is scanned, exchange.
-				
-				// Connect the circular list again:
-				root.setLeft(tempRoot);	
-				
-				if(tempRoot != null)
-					tempRoot.setRight(root);
-				
-				tempRoot = root;
+				FibonacciHeap<T>    heap = new FibonacciHeap<T>(root);
+			
+				Merge(heap);
 			}			
-			
-			// Connects the circular list
-			firstRoot.setLeft(tempRoot);
-			tempRoot.setRight(firstRoot);
-			
+			System.Console.WriteLine("XXX");
 			// This should be it.
-			_size --;
+			
 	
 		}
 		
@@ -155,6 +148,7 @@ namespace SharpDS.ds.fibonacciheap
 		{
 			FibonacciTreeNode<T> inList = ranks[nodesRight.rank]; // node contained in the list at given rank
 			FibonacciTreeNode<T> toSlot = nodesRight;             // node at given position
+			
 			// If the position in ranks array 
 			// is already filled up, merge the 
 			// two nodes and add them to rank+1 slot
@@ -202,28 +196,33 @@ namespace SharpDS.ds.fibonacciheap
 		/// </summary>
 		public void Merge(FibonacciHeap<T> heap)
 		{			
-			
+
 			// Special cases:
 			if(minimumNode == null) // minnode is null
 			{
-				System.Console.WriteLine("what should happen happened");
 				minimumNode = heap.minimumNode;
 				_size = heap._size;
 				return;
 			}
 			
-			if(heap.minimumNode == null) // heap.minnode is null - do nothing
+			if(heap.minimumNode == null){ // heap.minnode is null - do nothing
 				return;
-				
+			}
+			
 			// Concenates the lists:
 			FibonacciTreeNode<T> last = minimumNode.getLeft();	// keeps a reference to left node
 			FibonacciTreeNode<T> heapLast = heap.minimumNode.getLeft();
 			
-			last.setRight(heap.minimumNode);
+			last.setRight(heap.minimumNode); //Strange behaviour here ... unlinked properly?
 			heap.minimumNode.setLeft(last);
 			
-			minimumNode.setLeft(heapLast);
-			heapLast.setRight(minimumNode);
+			if(heapLast == null){ // Identify singleton heap
+				minimumNode.setLeft(heap.minimumNode);
+				heap.minimumNode.setRight(minimumNode);
+			}else{
+				minimumNode.setLeft(heapLast);
+				heapLast.setRight(minimumNode);
+			}
 			
 			/// Updates heapnodes
 			if(heap.minimumNode.getPrice() < minimumNode.getPrice())
