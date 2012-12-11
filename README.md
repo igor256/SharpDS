@@ -17,6 +17,10 @@ Be sure to visit:
 
 Updates:
 -------
+* 11/12/2012 -
+Fibonacci Heap implementation candidate finished. To be tested. 
+First release version to be published after this is done.
+
 * 10/12/2012 -
 Fibonacci Heap still being implemented. RemoveMinimum mehtod is faulty.
 

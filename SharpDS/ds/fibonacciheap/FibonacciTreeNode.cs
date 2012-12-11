@@ -132,22 +132,14 @@ namespace SharpDS.ds.fibonacciheap
 		/// </summary>
 		public void HardUnlink()
 		{
-			
-			// identify singleton
-			if(this.left == null)
-				return;
-			
-			// if removing last of two nodes
-			if(left.getLeft() == this){
-				left.setRight(null);
-				left.setLeft(null);
-				return;
-			}
-			
 			// otherwise just connect siblings
-			this.left.setRight(null);
-			if(this.right != null)
-				this.right.setLeft(null);
+			if(this.getRight() != null)
+				this.getRight().setLeft(null);
+			if(this.getLeft() != null)
+				this.getLeft().setRight(null);
+			
+			setLeft(null);
+			setRight(null);
 		}
 		
 		

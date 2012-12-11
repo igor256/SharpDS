@@ -41,7 +41,7 @@ namespace SharpDS.ds.fibonacciheap
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SharpDS.ds.fibonacciheap.FibonacciHeap`1"/> class.
 		/// </summary>
-		public FibonacciHeap (FibonacciTreeNode<T> node):base()
+		public FibonacciHeap (ref FibonacciTreeNode<T> node):base()
 		{
 			minimumNode = node;
 			_size = 1;
@@ -85,32 +85,35 @@ namespace SharpDS.ds.fibonacciheap
 			
 			// Implement the filling of the ranks array!
 			int maxRank = (int) size-1+minimumNode.rank;                      // TODO: what is the max rank of any node if there are n + m nodes present? Check
-			FibonacciTreeNode<T>[] ranks    = new FibonacciTreeNode<T>[maxRank]; // Array containing rootnodes indexed by rank
-			FibonacciTreeNode<T> nodesRight = minimumNode.getRight();	
+			FibonacciTreeNode<T>[] ranks = new FibonacciTreeNode<T>[maxRank]; // Array containing rootnodes indexed by rank
 			
-			minimumNode.HardUnlink(); // the circular linked list is now splitted
-			minimumNode = null;
+			FibonacciTreeNode<T> nodesRight = minimumNode.getRight();
+			
+			// Unlink the min node
+			minimumNode.unlink(); // the circular linked list is now splitted
+			minimumNode = nodesRight;
+				
 			
 			// Performing the insertion step for circular list of rootnodes without minimum
-			while(nodesRight != minimumNode) // Loops through all items in the circular list except the minimum node
+			while(nodesRight != null) // Loops through all items in the circular list except the minimum node
 			{
 				InsertionStep(ref ranks, nodesRight);
-				nodesRight = nodesRight.getRight(); 	// Repoints to the right sibling
-			} // OK
+				// Repoints to the right sibling
+				nodesRight = nodesRight.getRight();
+			}
 			
 			// Performing the insertion step for children of the min node
-			foreach(FibonacciTreeNode<T> child in children)
+			foreach(FibonacciTreeNode<T> node in children)
 			{
-				InsertionStep(ref ranks, child); //how come i have null child?
-			} // OK?
+				InsertionStep(ref ranks, node);
+			}
 			
 			// All nodes should be now 
 			// reheapified and inserted 
 			// in the ranks array
-			//         ----------- WORKS
+			
 			// Assuming this step was successful, this should work:
 			int length = ranks.GetLength(0);
-			_size = 0;
 			
 			// Scanning ranks array:
 			for(int i = 0; i < length; i++)
@@ -121,15 +124,17 @@ namespace SharpDS.ds.fibonacciheap
 				
 				// Assigns the content to root variable.	
 				FibonacciTreeNode<T> root = ranks[i]; 
-				root.HardUnlink(); // This is probably an unnecessary step
+				FibonacciHeap<T>    heap = new FibonacciHeap<T>(ref root);
 				
-				FibonacciHeap<T>    heap = new FibonacciHeap<T>(root);
+				// Update minimum Node
+				if (root.getPrice() < minimumNode.getPrice())
+					minimumNode = root; // If node with lower price is scanned, exchange.
+				
 				Merge(heap);
 			}			
 			
-			System.Console.WriteLine("XXX");
 			// This should be it.
-			
+			_size --;
 	
 		}
 		
@@ -191,39 +196,28 @@ namespace SharpDS.ds.fibonacciheap
 		/// </summary>
 		public void Merge(FibonacciHeap<T> heap)
 		{			
-
+			
 			// Special cases:
 			if(minimumNode == null) // minnode is null
 			{
+				System.Console.WriteLine("what should happen happened");
 				minimumNode = heap.minimumNode;
 				_size = heap._size;
 				return;
 			}
 			
-			if(heap.minimumNode == null){ // heap.minnode is null - do nothing
+			if(heap.minimumNode == null) // heap.minnode is null - do nothing
 				return;
-			}
-			
+				
 			// Concenates the lists:
 			FibonacciTreeNode<T> last = minimumNode.getLeft();	// keeps a reference to left node
 			FibonacciTreeNode<T> heapLast = heap.minimumNode.getLeft();
 			
-			if(last != null){
-				last.setRight(heap.minimumNode); //Strange behaviour here ... unlinked properly?
-				heap.minimumNode.setLeft(last);
-			}else // Connecting two
-			{
-				minimumNode.setRight(heap.minimumNode); 
-				heap.minimumNode.setLeft(minimumNode);
-			}
+			last.setRight(heap.minimumNode);
+			heap.minimumNode.setLeft(last);
 			
-			if(heapLast == null){ // Identify singleton heap
-				minimumNode.setLeft(heap.minimumNode);
-				heap.minimumNode.setRight(minimumNode);
-			}else{
-				minimumNode.setLeft(heapLast);
-				heapLast.setRight(minimumNode);
-			}
+			minimumNode.setLeft(heapLast);
+			heapLast.setRight(minimumNode);
 			
 			/// Updates heapnodes
 			if(heap.minimumNode.getPrice() < minimumNode.getPrice())
